@@ -30,6 +30,19 @@ return [
 
     'path' => env('HORIZON_PATH', 'horizon'),
 
+
+    /*
+    |--------------------------------------------------------------------------
+    | Horizon Base Path
+    |--------------------------------------------------------------------------
+    |
+    | This is the base path that Horizon will sit under. This is helpful
+    | if you need to use Horizon in a subdirectory on the server. The default
+    | is empty so that Horizon will run from the root directory on the server.
+    |
+    */
+    'base_path' => env('HORIZON_BASE_PATH', ''),
+
     /*
     |--------------------------------------------------------------------------
     | Horizon Redis Connection
@@ -70,7 +83,7 @@ return [
     |
     */
 
-    'middleware' => ['web'],
+    'middleware' => [],
 
     /*
     |--------------------------------------------------------------------------

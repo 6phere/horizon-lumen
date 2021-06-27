@@ -7,6 +7,7 @@ use Illuminate\Queue\QueueManager;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Horizon\Connectors\RedisConnector;
+use Laravelista\LumenVendorPublish\VendorPublishCommand;
 
 class HorizonServiceProvider extends ServiceProvider
 {
@@ -54,9 +55,9 @@ class HorizonServiceProvider extends ServiceProvider
             'domain' => config('horizon.domain', null),
             'prefix' => config('horizon.path'),
             'namespace' => 'Laravel\Horizon\Http\Controllers',
-            'middleware' => config('horizon.middleware', 'web'),
+            'middleware' => config('horizon.middleware'),
         ], function () {
-            $this->loadRoutesFrom(__DIR__.'/../routes/web.php');
+            require __DIR__ . '/../routes/web.php';
         });
     }
 
@@ -127,6 +128,7 @@ class HorizonServiceProvider extends ServiceProvider
                 Console\TimeoutCommand::class,
                 Console\WorkCommand::class,
             ]);
+            $this->commands(VendorPublishCommand::class);
         }
 
         $this->commands([Console\SnapshotCommand::class]);
@@ -159,6 +161,7 @@ class HorizonServiceProvider extends ServiceProvider
      */
     protected function configure()
     {
+        $this->app->configure('horizon');
         $this->mergeConfigFrom(
             __DIR__.'/../config/horizon.php', 'horizon'
         );
